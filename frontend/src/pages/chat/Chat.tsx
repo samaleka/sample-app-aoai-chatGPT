@@ -8,7 +8,7 @@ import rehypeRaw from "rehype-raw";
 import uuid from 'react-uuid';
 
 import styles from "./Chat.module.css";
-import Azure from "../../assets/Azure.svg";
+import Azure from "../../assets/nexus.png";
 
 import {
     ChatMessage,
@@ -86,6 +86,7 @@ const Chat = () => {
     }
     
     const getUserInfoList = async () => {
+        /*
         const userInfoList = await getUserInfo();
         if (userInfoList.length === 0 && window.location.hostname !== "127.0.0.1") {
             setShowAuthMessage(true);
@@ -93,6 +94,8 @@ const Chat = () => {
         else {
             setShowAuthMessage(false);
         }
+        */
+        setShowAuthMessage(false);
     }
 
     const makeApiRequestWithoutCosmosDB = async (question: string, conversationId?: string) => {
@@ -545,7 +548,7 @@ const Chat = () => {
                                     aria-hidden="true"
                                 />
                                 <h1 className={styles.chatEmptyStateTitle}>Start chatting</h1>
-                                <h2 className={styles.chatEmptyStateSubtitle}>This chatbot is configured to answer your questions</h2>
+                                <h2 className={styles.chatEmptyStateSubtitle}>GPT Powered ChatBot for CSCP Onboarding</h2>
                             </Stack>
                         ) : (
                             <div className={styles.chatMessageStream} style={{ marginBottom: isLoading ? "40px" : "0px"}} role="log">
