@@ -4,7 +4,7 @@ import logging
 import requests
 import openai
 from azure.identity import DefaultAzureCredential
-from flask import Flask, Response, request, jsonify, send_from_directory
+from flask import Flask, Response, request, jsonify, send_from_directory, render_template, flash
 from dotenv import load_dotenv
 
 from backend.auth.auth_utils import get_authenticated_user_details
@@ -26,6 +26,33 @@ def favicon():
 @app.route("/assets/<path:path>")
 def assets(path):
     return send_from_directory("static/assets", path)
+
+@app.route("/upload", methods=['GET'])
+def upload_file():
+    return render_template("upload.html")
+
+@app.route('/upload', methods=['POST'])
+def upload_file_ADLS():
+    # check if the post request has the file part
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(request.url)
+    file = request.files['file']
+    
+    # If the user does not select a file, the browser submits an
+    # empty file without a filename.
+    if file.filename == '':
+        flash('No selected file')
+        return redirect(request.url)
+    
+    # Ensure the uploads directory exists
+    #if not data_lake_client.does_directory_exist(file_system_name, directory_name):
+    #    data_lake_client.create_directory(file_system_name, directory_name)
+    
+    # Save the uploaded file to ADLS Gen2
+    # file.save(os.path.join(directory_name, file.filename))
+ 
+    return 'File uploaded successfully.'
 
 
 # ACS Integration Settings
